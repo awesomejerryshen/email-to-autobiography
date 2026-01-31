@@ -1,0 +1,28 @@
+{
+  "name": "email-to-autobiography",
+  "version": "0.1.0",
+  "description": "Turn your emails into your life story. Write naturally, let AI weave the narrative.",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/awesomejerryshen/email-to-autobiography.git"
+  },
+  "author": "AwesomeJerry",
+  "license": "MIT",
+  "keywords": [
+    "email",
+    "autobiography",
+    "memoir",
+    "llm",
+    "ai",
+    "lifestory"
+  ],
+  "scripts": {
+    "dev": "echo 'Starting development server...' && npx serve . -l 3000",
+    "build": "echo 'Static site - no build needed'",
+    "preview": "npx serve . -l 3000"
+  },
+  "devDependencies": {
+    "serve": "^14.2.0"
+  }
+}
