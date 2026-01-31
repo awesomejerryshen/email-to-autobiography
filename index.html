@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email to Autobiography - Turn Your Emails Into Your Life Story</title>
+    <meta name="description" content="Write emails naturally, let AI weave them into your autobiography. No new habits needed.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #8b5cf6;
+            --dark: #0f172a;
+            --dark-lighter: #1e293b;
+            --text: #f1f5f9;
+            --text-muted: #94a3b8;
+            --gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--dark);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .language-switch {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .lang-btn {
+            background: var(--dark-lighter);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            color: var(--text);
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .lang-btn:hover {
+            background: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            background: radial-gradient(ellipse at top, rgba(99, 102, 241, 0.15) 0%, transparent 50%);
+        }
+
+        .hero-content {
+            text-align: center;
+            max-width: 900px;
+            padding: 60px 0;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 8vw, 4.5rem);
+            font-weight: 800;
+            margin-bottom: 24px;
+            line-height: 1.1;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: clamp(1.125rem, 2.5vw, 1.5rem);
+            color: var(--text-muted);
+            margin-bottom: 40px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-group {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 16px 32px;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: var(--gradient);
+            color: white;
+            box-shadow: 0 4px 20px rgba(99, 102, 241, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 30px rgba(99, 102, 241, 0.5);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text);
+            border: 2px solid var(--text-muted);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--text);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        /* Floating Elements */
+        .floating {
+            position: absolute;
+            animation: float 6s ease-in-out infinite;
+            opacity: 0.6;
+        }
+
+        .floating:nth-child(1) { top: 20%; left: 10%; animation-delay: 0s; }
+        .floating:nth-child(2) { top: 60%; right: 10%; animation-delay: 2s; }
+        .floating:nth-child(3) { bottom: 20%; left: 20%; animation-delay: 4s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+
+        /* Features Section */
+        .features {
+            padding: 120px 0;
+            background: var(--dark-lighter);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .section-header h2 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .section-header p {
+            color: var(--text-muted);
+            font-size: 1.25rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 32px;
+        }
+
+        .feature-card {
+            background: var(--dark);
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid rgba(99, 102, 241, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(99, 102, 241, 0.3);
+            box-shadow: 0 10px 40px rgba(99, 102, 241, 0.1);
+        }
+
+        .feature-icon {
+            width: 64px;
+            height: 64px;
+            background: var(--gradient);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+            font-size: 28px;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .feature-card p {
+            color: var(--text-muted);
+            line-height: 1.7;
+        }
+
+        /* How It Works */
+        .how-it-works {
+            padding: 120px 0;
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 48px;
+            margin-top: 60px;
+        }
+
+        .step {
+            text-align: center;
+            position: relative;
+        }
+
+        .step-number {
+            width: 60px;
+            height: 60px;
+            background: var(--gradient);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0 auto 24px;
+        }
+
+        .step h3 {
+            font-size: 1.25rem;
+            margin-bottom: 12px;
+        }
+
+        .step p {
+            color: var(--text-muted);
+        }
+
+        /* Tech Stack */
+        .tech-stack {
+            padding: 120px 0;
+            background: var(--dark-lighter);
+            text-align: center;
+        }
+
+        .tech-icons {
+            display: flex;
+            justify-content: center;
+            gap: 48px;
+            flex-wrap: wrap;
+            margin-top: 60px;
+        }
+
+        .tech-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .tech-item span {
+            font-size: 48px;
+        }
+
+        .tech-item p {
+            color: var(--text-muted);
+            font-size: 0.875rem;
+        }
+
+        /* Footer */
+        footer {
+            padding: 60px 0;
+            text-align: center;
+            border-top: 1px solid rgba(99, 102, 241, 0.1);
+        }
+
+        footer p {
+            color: var(--text-muted);
+            margin-bottom: 24px;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+        }
+
+        .social-links a {
+            color: var(--text);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: var(--primary);
+        }
+
+        /* Language-specific styles */
+        [lang="zh-TW"] {
+            font-family: 'Inter', 'Noto Sans TC', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1.125rem;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .steps {
+                grid-template-columns: 1fr;
+                gap: 32px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="language-switch">
+        <button class="lang-btn" onclick="toggleLanguage()">中文 / EN</button>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="floating">✉️</div>
+        <div class="floating">📖</div>
+        <div class="floating">✨</div>
+        
+        <div class="container">
+            <div class="hero-content">
+                <!-- English -->
+                <div id="content-en">
+                    <h1>Email to Autobiography</h1>
+                    <p>Write emails naturally. Let AI weave them into your life story. No new habits needed.</p>
+                    <div class="cta-group">
+                        <a href="#features" class="btn btn-primary">Explore Features</a>
+                        <a href="https://github.com/awesomejerry/email-to-autobiography" class="btn btn-secondary">View on GitHub</a>
+                    </div>
+                </div>
+                
+                <!-- Traditional Chinese -->
+                <div id="content-zh" style="display: none;">
+                    <h1>Email 轉自傳</h1>
+                    <p>自然地寫 Email，讓 AI 為您編織人生故事。無需養成新習慣。</p>
+                    <div class="cta-group">
+                        <a href="#features" class="btn btn-primary">探索功能</a>
+                        <a href="https://github.com/awesomejerry/email-to-autobiography" class="btn btn-secondary">查看 GitHub</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="container">
+            <div class="section-header">
+                <div id="features-header-en">
+                    <h2>Why Email?</h2>
+                    <p>You already write emails. We turn that habit into a memoir.</p>
+                </div>
+                <div id="features-header-zh" style="display: none;">
+                    <h2>為什麼選擇 Email？</h2>
+                    <p>您已經在寫 Email。我們將這個習慣轉化為回憶錄。</p>
+                </div>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">✉️</div>
+                    <div id="feature1-en">
+                        <h3>Zero Friction</h3>
+                        <p>Just email yourself or a dedicated address. No new app to open, no new habit to form.</p>
+                    </div>
+                    <div id="feature1-zh" style="display: none;">
+                        <h3>零摩擦力</h3>
+                        <p>只需寄信給自己或專用地址。無需開啟新 App，無需養成新習慣。</p>
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🤖</div>
+                    <div id="feature2-en">
+                        <h3>AI-Powered</h3>
+                        <p>LLM analyzes your emails, detects themes, emotional arcs, and organizes chronologically.</p>
+                    </div>
+                    <div id="feature2-zh" style="display: none;">
+                        <h3>AI 驅動</h3>
+                        <p>LLM 分析您的 Email，偵測主題、情感弧線，並依時間組織。</p>
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">📖</div>
+                    <div id="feature3-en">
+                        <h3>Multiple Views</h3>
+                        <p>Read as chapters, explore by themes, or browse through an interactive timeline.</p>
+                    </div>
+                    <div id="feature3-zh" style="display: none;">
+                        <h3>多元視角</h3>
+                        <p>以章節閱讀、依主題探索，或瀏覽互動時間軸。</p>
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">📤</div>
+                    <div id="feature4-en">
+                        <h3>Export Ready</h3>
+                        <p>Export your autobiography as PDF, EPUB, or Markdown when it's ready to share.</p>
+                    </div>
+                    <div id="feature4-zh" style="display: none;">
+                        <h3>準備匯出</h3>
+                        <p>當準備好分享時，匯出您的自傳為 PDF、EPUB 或 Markdown。</p>
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🔒</div>
+                    <div id="feature5-en">
+                        <h3>Privacy First</h3>
+                        <p>Your story stays yours. All data stored locally or in your chosen encrypted vault.</p>
+                    </div>
+                    <div id="feature5-zh" style="display: none;">
+                        <h3>隱私優先</h3>
+                        <p>您的故事屬於您。所有資料儲存在本地或您選擇的加密保險庫中。</p>
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">⏰</div>
+                    <div id="feature6-en">
+                        <h3>Smart Organization</h3>
+                        <p>AI detects key life events, milestones, and turns scattered emails into a narrative.</p>
+                    </div>
+                    <div id="feature6-zh" style="display: none;">
+                        <h3>智慧組織</h3>
+                        <p>AI 偵測關鍵人生事件、里程碑，將零散的 Email 轉化為敘事。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="how-it-works">
+        <div class="container">
+            <div class="section-header">
+                <div id="works-header-en">
+                    <h2>How It Works</h2>
+                    <p>Three simple steps to your autobiography</p>
+                </div>
+                <div id="works-header-zh" style="display: none;">
+                    <h2>運作方式</h2>
+                    <p>三個簡單步驟，完成您的自傳</p>
+                </div>
+            </div>
+
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div id="step1-en">
+                        <h3>Write Emails</h3>
+                        <p>Document your life naturally through emails - to yourself, friends, or a dedicated address.</p>
+                    </div>
+                    <div id="step1-zh" style="display: none;">
+                        <h3>撰寫 Email</h3>
+                        <p>透過 Email 自然地記錄您的生活 - 給自己、朋友，或專用地址。</p>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div id="step2-en">
+                        <h3>AI Processes</h3>
+                        <p>LLM analyzes themes, emotions, and events to organize your life into chapters.</p>
+                    </div>
+                    <div id="step2-zh" style="display: none;">
+                        <h3>AI 處理</h3>
+                        <p>LLM 分析主題、情感和事件，將您的生活組織成章節。</p>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div id="step3-en">
+                        <h3>Read & Share</h3>
+                        <p>Browse your autobiography, edit chapters, and export when you're ready.</p>
+                    </div>
+                    <div id="step3-zh" style="display: none;">
+                        <h3>閱讀與分享</h3>
+                        <p>瀏覽您的自傳、編輯章節，並在準備好時匯出。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tech Stack -->
+    <section class="tech-stack">
+        <div class="container">
+            <div class="section-header">
+                <div id="tech-header-en">
+                    <h2>Tech Stack</h2>
+                    <p>Built with modern tools for privacy and performance</p>
+                </div>
+                <div id="tech-header-zh" style="display: none;">
+                    <h2>技術堆疊</h2>
+                    <p>使用現代工具打造，兼顧隱私與效能</p>
+                </div>
+            </div>
+
+            <div class="tech-icons">
+                <div class="tech-item">
+                    <span>📧</span>
+                    <p>Email API</p>
+                </div>
+                <div class="tech-item">
+                    <span>🤖</span>
+                    <p>LLM</p>
+                </div>
+                <div class="tech-item">
+                    <span>⚛️</span>
+                    <p>React</p>
+                </div>
+                <div class="tech-item">
+                    <span>🗄️</span>
+                    <p>Database</p>
+                </div>
+                <div class="tech-item">
+                    <span>📦</span>
+                    <p>TypeScript</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div id="footer-en">
+                <p>Built by AwesomeJerry · Exploring the intersection of memory and AI</p>
+            </div>
+            <div id="footer-zh" style="display: none;">
+                <p>由 AwesomeJerry 打造 · 探索記憶與 AI 的交匯點</p>
+            </div>
+            <div class="social-links">
+                <a href="https://github.com/awesomejerry/email-to-autobiography">GitHub</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        let currentLang = 'en';
+
+        function toggleLanguage() {
+            currentLang = currentLang === 'en' ? 'zh' : 'en';
+            const isZh = currentLang === 'zh';
+
+            document.documentElement.lang = isZh ? 'zh-TW' : 'en';
+
+            // Toggle hero content
+            document.getElementById('content-en').style.display = isZh ? 'none' : 'block';
+            document.getElementById('content-zh').style.display = isZh ? 'block' : 'none';
+
+            // Toggle features header
+            document.getElementById('features-header-en').style.display = isZh ? 'none' : 'block';
+            document.getElementById('features-header-zh').style.display = isZh ? 'block' : 'none';
+
+            // Toggle feature cards
+            for (let i = 1; i <= 6; i++) {
+                document.getElementById(`feature${i}-en`).style.display = isZh ? 'none' : 'block';
+                document.getElementById(`feature${i}-zh`).style.display = isZh ? 'block' : 'none';
+            }
+
+            // Toggle how it works
+            document.getElementById('works-header-en').style.display = isZh ? 'none' : 'block';
+            document.getElementById('works-header-zh').style.display = isZh ? 'block' : 'none';
+
+            for (let i = 1; i <= 3; i++) {
+                document.getElementById(`step${i}-en`).style.display = isZh ? 'none' : 'block';
+                document.getElementById(`step${i}-zh`).style.display = isZh ? 'block' : 'none';
+            }
+
+            // Toggle tech stack
+            document.getElementById('tech-header-en').style.display = isZh ? 'none' : 'block';
+            document.getElementById('tech-header-zh').style.display = isZh ? 'block' : 'none';
+
+            // Toggle footer
+            document.getElementById('footer-en').style.display = isZh ? 'none' : 'block';
+            document.getElementById('footer-zh').style.display = isZh ? 'block' : 'none';
+
+            // Save preference
+            localStorage.setItem('lang', currentLang);
+        }
+
+        // Load saved language preference
+        window.onload = function() {
+            const savedLang = localStorage.getItem('lang');
+            if (savedLang && savedLang !== 'en') {
+                toggleLanguage();
+            }
+        };
+    </script>
+</body>
+</html>
